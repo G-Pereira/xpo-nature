@@ -18,6 +18,7 @@ void ofApp::setup() {
   ofSetVerticalSync(true);
   // movie.setPixelFormat(OF_PIXELS_NATIVE);
   ofEnableAlphaBlending();
+  ofSetColor(0x000000);
   state = PLAYING_MOVIE_0;
   movie.load(MOVIE_0);
   movie0_pos = 0;
@@ -55,10 +56,10 @@ void ofApp::update() {
   case FADING_OUT_0:
     current_movie_pos = movie.getPosition() * movie.getDuration();
     if (current_movie_pos < movie0_pos) {
-      opacity =
-          255 * max(fmodf(movie0_pos - current_movie_pos, movie.getDuration()) /
-                        FADE_SECONDS,
-                    1.0);
+      opacity = (int)(255.0 * min(fmodf(movie0_pos - current_movie_pos,
+                                        movie.getDuration()) /
+                                      FADE_SECONDS,
+                                  1.0));
     } else {
       opacity = 0;
       movie.load(MOVIE_1);
@@ -70,10 +71,10 @@ void ofApp::update() {
   case FADING_OUT_1:
     current_movie_pos = movie.getPosition() * movie.getDuration();
     if (current_movie_pos < movie1_pos) {
-      opacity =
-          255 * max(fmodf(movie1_pos - current_movie_pos, movie.getDuration()) /
-                        FADE_SECONDS,
-                    1.0);
+      opacity = (int)(255.0 * min(fmodf(movie1_pos - current_movie_pos,
+                                        movie.getDuration()) /
+                                      FADE_SECONDS,
+                                  1.0));
     } else {
       opacity = 0;
       movie.load(MOVIE_0);
@@ -85,9 +86,10 @@ void ofApp::update() {
   case FADING_IN_0:
     current_movie_pos = movie.getPosition() * movie.getDuration();
     if (current_movie_pos > movie0_pos + FADE_SECONDS) {
-      opacity = 255 *
+      opacity =
+          (int)(255.0 *
                 fmodf(current_movie_pos - movie0_pos, movie.getDuration()) /
-                FADE_SECONDS;
+                FADE_SECONDS);
     } else {
       opacity = 255;
       state = PLAYING_MOVIE_0;
@@ -96,9 +98,10 @@ void ofApp::update() {
   case FADING_IN_1:
     current_movie_pos = movie.getPosition() * movie.getDuration();
     if (current_movie_pos > movie1_pos + FADE_SECONDS) {
-      opacity = 255 *
+      opacity =
+          (int)(255.0 *
                 fmodf(current_movie_pos - movie1_pos, movie.getDuration()) /
-                FADE_SECONDS;
+                FADE_SECONDS);
     } else {
       opacity = 255;
       state = PLAYING_MOVIE_1;
