@@ -3,26 +3,23 @@
 #include "ofMain.h"
 #include "ofxGPIO.h"
 
-class ofApp : public ofBaseApp{
+class ofApp : public ofBaseApp {
 
-	public:
+public:
+  vector<ofVideoPlayer> vids;
+  bool bFading = false;
+  int vid_on = 0;
+  float startFadeTime;
+  float fadeDuration = 5;
 
-		ofVideoPlayer movie;
+  GPIO presence_sensor;
+  int state_sensor;
+  int rising = 1;
 
-		GPIO presence_sensor;
-		int state_sensor;
+  void setup();
+  void update();
+  void draw();
+  void exit();
 
-		int opacity;
-
-		int state;
-		float movie0_pos;
-		float movie1_pos;
-
-		void setup();
-		void update();
-		void draw();
-		void exit();
-
-		void keyPressed(int key);
+  void keyPressed(int key);
 };
-
